@@ -1,0 +1,4857 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Lazizbek AI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root{
+    --bg:#06080d;
+    --bg2:#0d111b;
+    --card:rgba(255,255,255,.055);
+    --card2:rgba(255,255,255,.09);
+    --text:#ffffff;
+    --muted:#9ba4b7;
+
+    --blue:#4d7cff;
+    --cyan:#00d9ff;
+    --purple:#8b5cff;
+    --pink:#ff3cac;
+
+    --border:rgba(255,255,255,.11);
+    --shadow:0 30px 100px rgba(0,0,0,.45);
+
+    --radius:24px;
+}
+
+body.light{
+    --bg:#f4f6fa;
+    --bg2:#ffffff;
+    --card:rgba(0,0,0,.045);
+    --card2:rgba(0,0,0,.075);
+    --text:#10131b;
+    --muted:#667085;
+    --border:rgba(0,0,0,.10);
+    --shadow:0 25px 70px rgba(0,0,0,.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:.4s;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input{
+    font-family:inherit;
+}
+
+::selection{
+    background:var(--purple);
+    color:white;
+}
+
+
+/* ================= BACKGROUND ================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-10;
+    overflow:hidden;
+
+    background:
+    radial-gradient(
+        circle at 15% 15%,
+        rgba(139,92,255,.18),
+        transparent 30%
+    ),
+
+    radial-gradient(
+        circle at 85% 25%,
+        rgba(0,217,255,.13),
+        transparent 28%
+    ),
+
+    radial-gradient(
+        circle at 50% 100%,
+        rgba(255,60,172,.12),
+        transparent 30%
+    ),
+
+    var(--bg);
+}
+
+.blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    opacity:.25;
+    animation:blobMove 14s infinite alternate ease-in-out;
+}
+
+.blob1{
+    width:430px;
+    height:430px;
+    background:var(--purple);
+    left:-180px;
+    top:20%;
+}
+
+.blob2{
+    width:400px;
+    height:400px;
+    background:var(--cyan);
+    right:-180px;
+    top:45%;
+    animation-delay:-4s;
+}
+
+.blob3{
+    width:320px;
+    height:320px;
+    background:var(--pink);
+    left:45%;
+    bottom:-200px;
+    animation-delay:-7s;
+}
+
+@keyframes blobMove{
+    0%{
+        transform:translate(0,0) scale(1);
+    }
+
+    100%{
+        transform:translate(90px,-80px) scale(1.25);
+    }
+}
+
+#particles{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-5;
+}
+
+.particle{
+    position:absolute;
+    width:2px;
+    height:2px;
+    border-radius:50%;
+    background:var(--cyan);
+    opacity:.5;
+    animation:particleMove linear infinite;
+}
+
+@keyframes particleMove{
+    from{
+        transform:translateY(105vh);
+    }
+
+    to{
+        transform:translateY(-20px);
+    }
+}
+
+
+/* ================= CURSOR ================= */
+
+.cursor{
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+
+    transform:translate(-50%,-50%);
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(77,124,255,.13),
+        transparent 68%
+    );
+}
+
+@media(max-width:700px){
+    .cursor{
+        display:none;
+    }
+}
+
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    position:fixed;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:min(1180px,94%);
+
+    padding:12px 14px 12px 22px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    border:1px solid var(--border);
+
+    background:rgba(7,10,17,.72);
+
+    backdrop-filter:blur(25px);
+
+    border-radius:22px;
+
+    z-index:1000;
+
+    box-shadow:var(--shadow);
+}
+
+body.light .navbar{
+    background:rgba(255,255,255,.78);
+}
+
+.logo{
+    font-family:"Space Grotesk";
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-1px;
+}
+
+.logo span{
+    background:
+    linear-gradient(
+        90deg,
+        var(--purple),
+        var(--cyan)
+    );
+
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.nav-links{
+    display:flex;
+    list-style:none;
+    gap:5px;
+}
+
+.nav-links a{
+    display:block;
+    padding:10px 12px;
+
+    color:var(--muted);
+
+    font-size:12px;
+    font-weight:700;
+
+    border-radius:11px;
+
+    transition:.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--text);
+    background:var(--card2);
+}
+
+.nav-buttons{
+    display:flex;
+    gap:8px;
+}
+
+.icon-button{
+    width:42px;
+    height:42px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border-radius:13px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.icon-button:hover{
+    transform:translateY(-3px);
+
+    border-color:var(--cyan);
+
+    box-shadow:
+    0 10px 30px
+    rgba(0,217,255,.15);
+}
+
+.menu-button{
+    display:none;
+}
+
+@media(max-width:950px){
+
+    .nav-links{
+        position:absolute;
+
+        display:none;
+
+        top:70px;
+        left:0;
+        right:0;
+
+        flex-direction:column;
+
+        padding:12px;
+
+        border:1px solid var(--border);
+
+        background:rgba(8,11,18,.95);
+
+        border-radius:18px;
+
+        backdrop-filter:blur(25px);
+    }
+
+    body.light .nav-links{
+        background:rgba(255,255,255,.96);
+    }
+
+    .nav-links.open{
+        display:flex;
+    }
+
+    .menu-button{
+        display:block;
+    }
+}
+
+
+/* ================= GENERAL ================= */
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+section{
+    min-height:100vh;
+
+    padding:
+    130px 0
+    90px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+}
+
+.eyebrow{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:8px 14px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    border-radius:999px;
+
+    color:var(--cyan);
+
+    font-size:11px;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+}
+
+.online-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#45ff9b;
+
+    box-shadow:
+    0 0 15px
+    #45ff9b;
+}
+
+.section-title{
+    font-family:"Space Grotesk";
+
+    font-size:
+    clamp(38px,6vw,68px);
+
+    line-height:1;
+
+    letter-spacing:-3px;
+
+    margin-bottom:20px;
+}
+
+.gradient{
+    background:
+    linear-gradient(
+        90deg,
+        var(--purple),
+        var(--cyan),
+        var(--pink),
+        var(--purple)
+    );
+
+    background-size:300%;
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    animation:gradientMove 7s linear infinite;
+}
+
+@keyframes gradientMove{
+    to{
+        background-position:300%;
+    }
+}
+
+.description{
+    color:var(--muted);
+
+    line-height:1.8;
+
+    font-size:16px;
+}
+
+.reveal{
+    opacity:0;
+
+    transform:translateY(35px);
+
+    transition:
+    opacity .8s,
+    transform .8s;
+}
+
+.reveal.show{
+    opacity:1;
+
+    transform:translateY(0);
+}
+
+
+/* ================= HERO ================= */
+
+.hero{
+    display:grid;
+
+    grid-template-columns:
+    1.1fr .9fr;
+
+    gap:60px;
+
+    align-items:center;
+}
+
+.hero-content{
+    position:relative;
+}
+
+.status{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:9px 14px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    border-radius:999px;
+
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-bottom:25px;
+}
+
+.status strong{
+    color:var(--text);
+}
+
+.hero h1{
+    font-family:"Space Grotesk";
+
+    font-size:
+    clamp(45px,7vw,90px);
+
+    line-height:.95;
+
+    letter-spacing:-4px;
+
+    margin-bottom:25px;
+}
+
+.hero h1 small{
+    display:block;
+
+    font-family:Inter;
+
+    font-size:18px;
+
+    color:var(--muted);
+
+    letter-spacing:0;
+
+    margin-bottom:15px;
+}
+
+.hero-text{
+    max-width:650px;
+
+    font-size:18px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+}
+
+.buttons{
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:14px 20px;
+
+    border-radius:14px;
+
+    border:1px solid transparent;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        120deg,
+        var(--purple),
+        var(--blue)
+    );
+
+    font-size:13px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+
+    box-shadow:
+    0 15px 40px
+    rgba(124,92,255,.3);
+}
+
+.btn i{
+    margin-right:7px;
+}
+
+.btn-outline{
+    background:var(--card);
+
+    border-color:var(--border);
+
+    color:var(--text);
+}
+
+
+/* ================= AI ORB ================= */
+
+.ai-visual{
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+}
+
+.orb-wrapper{
+    position:relative;
+
+    width:min(430px,80vw);
+
+    aspect-ratio:1;
+
+    display:grid;
+
+    place-items:center;
+}
+
+.ring{
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.14);
+
+    inset:5%;
+
+    animation:
+    spin 18s linear infinite;
+}
+
+.ring:nth-child(2){
+    inset:15%;
+
+    animation-duration:12s;
+
+    animation-direction:reverse;
+
+    border-color:
+    rgba(0,217,255,.23);
+}
+
+.ring:nth-child(3){
+    inset:25%;
+
+    animation-duration:8s;
+
+    border-color:
+    rgba(139,92,255,.18);
+}
+
+.ring::after{
+    content:"";
+
+    position:absolute;
+
+    width:11px;
+    height:11px;
+
+    border-radius:50%;
+
+    background:var(--cyan);
+
+    box-shadow:
+    0 0 25px
+    var(--cyan);
+
+    top:2%;
+    left:50%;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+.ai-orb{
+    position:relative;
+
+    width:66%;
+    height:66%;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    text-align:center;
+
+    background:
+    linear-gradient(
+        var(--bg2),
+        var(--bg2)
+    ) padding-box,
+
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--cyan),
+        var(--pink)
+    ) border-box;
+
+    border:4px solid transparent;
+
+    box-shadow:
+    0 0 90px
+    rgba(77,124,255,.2),
+
+    inset 0 0 70px
+    rgba(0,217,255,.08);
+
+    animation:
+    orbFloat 5s ease-in-out infinite;
+}
+
+@keyframes orbFloat{
+    50%{
+        transform:
+        translateY(-12px)
+        scale(1.04);
+
+        box-shadow:
+        0 0 130px
+        rgba(0,217,255,.2);
+    }
+}
+
+.ai-orb i{
+    font-size:75px;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--cyan)
+    );
+
+    -webkit-background-clip:text;
+
+    color:transparent;
+
+    margin-bottom:15px;
+}
+
+.ai-orb strong{
+    display:block;
+
+    font-family:"Space Grotesk";
+
+    font-size:19px;
+}
+
+.ai-orb small{
+    display:block;
+
+    margin-top:7px;
+
+    color:var(--muted);
+}
+
+
+/* ================= CARDS ================= */
+
+.grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:18px;
+}
+
+.card{
+    position:relative;
+
+    overflow:hidden;
+
+    padding:28px;
+
+    border:
+    1px solid var(--border);
+
+    background:var(--card);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:var(--radius);
+
+    transition:.35s;
+}
+
+.card::before{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    left:var(--mx,0);
+
+    top:var(--my,0);
+
+    transform:
+    translate(-50%,-50%);
+
+    background:
+    radial-gradient(
+        circle,
+        rgba(0,217,255,.16),
+        transparent 68%
+    );
+
+    pointer-events:none;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+
+    border-color:
+    rgba(0,217,255,.3);
+
+    box-shadow:var(--shadow);
+}
+
+.card-icon{
+    width:54px;
+    height:54px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:16px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(124,92,255,.18),
+        rgba(0,217,255,.1)
+    );
+
+    border:1px solid var(--border);
+
+    color:var(--cyan);
+
+    font-size:22px;
+
+    margin-bottom:20px;
+}
+
+.card h3{
+    font-size:20px;
+
+    margin-bottom:10px;
+}
+
+.card p{
+    color:var(--muted);
+
+    line-height:1.7;
+
+    font-size:14px;
+}
+
+
+/* ================= ABOUT ================= */
+
+.about-grid{
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:18px;
+}
+
+.info-list{
+    display:grid;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.info{
+    display:flex;
+
+    gap:13px;
+
+    padding:15px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    border-radius:16px;
+}
+
+.info i{
+    width:37px;
+    height:37px;
+
+    flex:none;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:11px;
+
+    background:var(--card2);
+
+    color:var(--cyan);
+}
+
+.info b{
+    display:block;
+
+    margin-bottom:4px;
+}
+
+.info span{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.5;
+}
+
+
+/* ================= WORK ================= */
+
+.work-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(2,1fr);
+
+    gap:18px;
+}
+
+.work{
+    min-height:260px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.work-number{
+    position:absolute;
+
+    right:20px;
+
+    top:-5px;
+
+    font-family:"Space Grotesk";
+
+    font-size:90px;
+
+    font-weight:800;
+
+    color:rgba(255,255,255,.035);
+}
+
+.work-icon{
+    font-size:32px;
+
+    color:var(--cyan);
+
+    margin-bottom:25px;
+}
+
+
+/* ================= SKILLS ================= */
+
+.skills-layout{
+    display:grid;
+
+    grid-template-columns:
+    .8fr 1.2fr;
+
+    gap:20px;
+}
+
+.skill-list{
+    display:grid;
+
+    gap:14px;
+}
+
+.skill{
+    padding:20px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    border-radius:18px;
+}
+
+.skill-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:11px;
+
+    font-size:13px;
+
+    font-weight:800;
+}
+
+.skill-top span:last-child{
+    color:var(--cyan);
+}
+
+.progress{
+    height:8px;
+
+    background:
+    rgba(255,255,255,.07);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-fill{
+    width:0;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        90deg,
+        var(--purple),
+        var(--cyan)
+    );
+
+    transition:
+    width 1.4s
+    cubic-bezier(.2,.8,.2,1);
+}
+
+
+/* ================= COLLABORATION ================= */
+
+.collab-grid{
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:18px;
+}
+
+.timeline{
+    position:relative;
+
+    display:grid;
+
+    gap:15px;
+
+    margin-top:20px;
+}
+
+.timeline::before{
+    content:"";
+
+    position:absolute;
+
+    left:19px;
+
+    top:15px;
+    bottom:15px;
+
+    width:1px;
+
+    background:
+    linear-gradient(
+        var(--purple),
+        var(--cyan)
+    );
+}
+
+.timeline-item{
+    position:relative;
+
+    padding:
+    20px
+    20px
+    20px
+    55px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    border-radius:17px;
+}
+
+.timeline-dot{
+    position:absolute;
+
+    left:11px;
+
+    top:23px;
+
+    width:17px;
+    height:17px;
+
+    border-radius:50%;
+
+    border:4px solid var(--cyan);
+
+    background:var(--bg);
+
+    box-shadow:
+    0 0 18px
+    rgba(0,217,255,.35);
+}
+
+.timeline-item h3{
+    font-size:16px;
+
+    margin-bottom:6px;
+}
+
+.timeline-item p{
+    color:var(--muted);
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+/* ================= CONTACT ================= */
+
+.contact-grid{
+    display:grid;
+
+    grid-template-columns:
+    1fr .8fr;
+
+    gap:18px;
+}
+
+.social-grid{
+    display:grid;
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+    gap:12px;
+
+    margin-top:25px;
+}
+
+.social{
+    min-height:90px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    border-radius:17px;
+
+    color:var(--muted);
+
+    transition:.3s;
+}
+
+.social i{
+    font-size:24px;
+
+    color:var(--text);
+}
+
+.social span{
+    font-size:11px;
+}
+
+.social:hover{
+    transform:translateY(-5px);
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--blue)
+    );
+
+    color:white;
+}
+
+.social:hover i{
+    color:white;
+}
+
+
+/* =========================================================
+                        AI CHAT
+   ========================================================= */
+
+.ai-button{
+    position:fixed;
+
+    right:25px;
+    bottom:25px;
+
+    width:64px;
+    height:64px;
+
+    border:0;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--cyan)
+    );
+
+    color:white;
+
+    font-size:23px;
+
+    cursor:pointer;
+
+    z-index:1900;
+
+    box-shadow:
+    0 15px 45px
+    rgba(0,217,255,.25);
+
+    transition:.3s;
+}
+
+.ai-button:hover{
+    transform:
+    translateY(-5px)
+    scale(1.05);
+}
+
+.ai-panel{
+    position:fixed;
+
+    right:22px;
+    bottom:22px;
+
+    width:
+    min(
+        400px,
+        calc(100vw - 30px)
+    );
+
+    height:570px;
+
+    display:none;
+
+    flex-direction:column;
+
+    z-index:2000;
+
+    border:1px solid var(--border);
+
+    background:
+    rgba(7,10,18,.9);
+
+    backdrop-filter:blur(25px);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 30px 100px
+    rgba(0,0,0,.55);
+}
+
+body.light .ai-panel{
+    background:
+    rgba(255,255,255,.95);
+}
+
+.ai-panel.open{
+    display:flex;
+
+    animation:
+    aiOpen .3s ease;
+}
+
+@keyframes aiOpen{
+    from{
+        opacity:0;
+
+        transform:
+        translateY(20px)
+        scale(.96);
+    }
+
+    to{
+        opacity:1;
+
+        transform:none;
+    }
+}
+
+.ai-header{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:16px 18px;
+
+    border-bottom:
+    1px solid var(--border);
+}
+
+.ai-title{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.ai-avatar{
+    width:42px;
+    height:42px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:13px;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--cyan)
+    );
+
+    color:white;
+}
+
+.ai-title b{
+    display:block;
+
+    font-size:14px;
+}
+
+.ai-title small{
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+.ai-close{
+    width:36px;
+    height:36px;
+
+    border:1px solid var(--border);
+
+    border-radius:10px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    cursor:pointer;
+}
+
+.ai-messages{
+    flex:1;
+
+    padding:16px;
+
+    overflow-y:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:13px;
+}
+
+
+/* ================= MESSAGE ================= */
+
+.message-box{
+    display:flex;
+
+    flex-direction:column;
+
+    max-width:88%;
+}
+
+.message-box.ai-box{
+    align-self:flex-start;
+}
+
+.message-box.user-box{
+    align-self:flex-end;
+
+    align-items:flex-end;
+}
+
+.message{
+    padding:11px 13px;
+
+    border-radius:15px;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+}
+
+.message.ai{
+    align-self:flex-start;
+
+    background:var(--card2);
+
+    border:
+    1px solid var(--border);
+}
+
+.message.user{
+    align-self:flex-end;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--blue)
+    );
+}
+
+
+/* ================= MESSAGE ACTIONS ================= */
+
+.message-actions{
+    display:flex;
+
+    gap:5px;
+
+    margin-top:5px;
+
+    opacity:.75;
+
+    transition:.2s;
+}
+
+.message-box:hover .message-actions{
+    opacity:1;
+}
+
+.message-action{
+    width:30px;
+    height:28px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--muted);
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:11px;
+
+    transition:.2s;
+}
+
+.message-action:hover{
+    color:var(--text);
+
+    border-color:var(--cyan);
+
+    background:var(--card2);
+
+    transform:translateY(-2px);
+}
+
+.message-action.reading{
+    color:var(--cyan);
+
+    border-color:var(--cyan);
+
+    box-shadow:
+    0 0 15px
+    rgba(0,217,255,.15);
+}
+
+.copy-success{
+    color:#45ff9b !important;
+
+    border-color:#45ff9b !important;
+}
+
+
+/* ================= AI INPUT ================= */
+
+.ai-input-area{
+    padding:12px;
+
+    border-top:
+    1px solid var(--border);
+}
+
+.ai-form{
+    display:flex;
+
+    gap:7px;
+}
+
+.ai-input{
+    flex:1;
+
+    min-width:0;
+
+    padding:12px;
+
+    border:
+    1px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    outline:none;
+
+    border-radius:13px;
+
+    font-size:13px;
+}
+
+.ai-input::placeholder{
+    color:var(--muted);
+}
+
+.ai-mic,
+.ai-send{
+    width:44px;
+
+    border:
+    1px solid var(--border);
+
+    border-radius:13px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    cursor:pointer;
+}
+
+.ai-send{
+    border:0;
+
+    color:white;
+
+    background:
+    linear-gradient(
+        135deg,
+        var(--purple),
+        var(--cyan)
+    );
+}
+
+.ai-mic.active{
+    color:var(--cyan);
+
+    box-shadow:
+    0 0 0 3px
+    rgba(0,217,255,.15);
+}
+
+.ai-note{
+    text-align:center;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+    margin-top:7px;
+}
+
+
+/* ================= FOOTER ================= */
+
+footer{
+    padding:30px 0;
+
+    border-top:
+    1px solid var(--border);
+
+    color:var(--muted);
+
+    font-size:12px;
+}
+
+.footer{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.top{
+    width:42px;
+    height:42px;
+
+    display:grid;
+
+    place-items:center;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:var(--card);
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:850px){
+
+    .hero,
+    .about-grid,
+    .skills-layout,
+    .collab-grid,
+    .contact-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        text-align:center;
+    }
+
+    .hero-text{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .status{
+        margin-left:auto;
+        margin-right:auto;
+    }
+
+    .buttons{
+        justify-content:center;
+    }
+
+    .ai-visual{
+        order:-1;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .work-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:500px){
+
+    section{
+        padding:
+        105px 0
+        70px;
+    }
+
+    .hero h1{
+        font-size:50px;
+
+        letter-spacing:-3px;
+    }
+
+    .section-title{
+        letter-spacing:-2px;
+    }
+
+    .social-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .ai-panel{
+        right:10px;
+        bottom:10px;
+
+        width:
+        calc(100vw - 20px);
+
+        height:72vh;
+    }
+
+    .ai-button{
+        right:15px;
+        bottom:15px;
+    }
+
+    .message-box{
+        max-width:94%;
+    }
+}
+
+</style>
+
+<style id="portfolio-extra-css">
+.portfolio-extra{padding:110px 0 90px}
+.portfolio-extra .section-head{margin-bottom:35px}
+.portfolio-extra .section-head h2{font-family:"Space Grotesk";font-size:clamp(34px,5vw,58px);letter-spacing:-2px;margin:10px 0}
+.portfolio-extra .section-head p{color:var(--muted);max-width:680px;line-height:1.8}
+.portfolio-projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.portfolio-project{padding:24px;border:1px solid var(--border);background:var(--card);backdrop-filter:blur(15px);border-radius:var(--radius);transition:.3s}
+.portfolio-project:hover{transform:translateY(-7px);border-color:rgba(0,217,255,.3);box-shadow:var(--shadow)}
+.portfolio-project .project-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:var(--card2);color:var(--cyan);font-size:21px;margin-bottom:18px}
+.portfolio-project h3{font-size:19px;margin-bottom:9px}
+.portfolio-project p{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:17px}
+.portfolio-tags{display:flex;flex-wrap:wrap;gap:7px}
+.portfolio-tags span{font-size:11px;font-weight:700;padding:7px 10px;border-radius:999px;border:1px solid var(--border);background:var(--card2);color:var(--muted)}
+.portfolio-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
+.portfolio-stat{padding:22px;border:1px solid var(--border);background:var(--card);border-radius:18px;text-align:center}
+.portfolio-stat strong{display:block;font-family:"Space Grotesk";font-size:30px;margin-bottom:5px}
+.portfolio-stat span{font-size:12px;color:var(--muted)}
+.portfolio-contact{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.portfolio-contact-card{padding:28px;border:1px solid var(--border);background:var(--card);border-radius:var(--radius)}
+.portfolio-contact-card h3{font-size:22px;margin-bottom:10px}
+.portfolio-contact-card p{color:var(--muted);line-height:1.7;font-size:14px;margin-bottom:18px}
+.portfolio-contact-links{display:flex;flex-wrap:wrap;gap:10px}
+.portfolio-contact-links a{display:inline-flex;align-items:center;gap:8px;padding:11px 14px;border:1px solid var(--border);background:var(--card2);border-radius:13px;font-size:12px;font-weight:700;transition:.25s}
+.portfolio-contact-links a:hover{border-color:var(--cyan);transform:translateY(-2px)}
+@media(max-width:900px){
+ .portfolio-projects{grid-template-columns:repeat(2,1fr)}
+ .portfolio-stats{grid-template-columns:repeat(2,1fr)}
+ .portfolio-contact{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+ .portfolio-extra{padding:85px 0 65px}
+ .portfolio-projects{grid-template-columns:1fr}
+ .portfolio-stats{grid-template-columns:1fr 1fr}
+ .portfolio-stat{padding:18px 10px}
+}
+</style>
+
+
+<style id="premium-portfolio-css">
+/* ================= PREMIUM PORTFOLIO LAYER ================= */
+:root{--ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-padding-top:100px}
+body{cursor:none}
+body.light .premium-nav{background:rgba(255,255,255,.76)}
+.premium-cursor,.premium-cursor-ring{position:fixed;pointer-events:none;z-index:10000;border-radius:50%;transform:translate(-50%,-50%);opacity:0}
+.premium-cursor{width:7px;height:7px;background:var(--cyan);box-shadow:0 0 18px var(--cyan);transition:opacity .2s}
+.premium-cursor-ring{width:34px;height:34px;border:1px solid rgba(0,217,255,.55);transition:width .25s,height .25s,border-color .25s,opacity .2s}
+body.cursor-hover .premium-cursor-ring{width:52px;height:52px;border-color:var(--purple)}
+.premium-progress{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));z-index:10001;box-shadow:0 0 14px rgba(0,217,255,.5)}
+.premium-section{position:relative}
+.premium-section .section-kicker{display:inline-flex;align-items:center;gap:8px;color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:12px}
+.premium-section .section-kicker:before{content:"";width:25px;height:1px;background:currentColor}
+.premium-title{font-family:"Space Grotesk";font-size:clamp(36px,5.5vw,64px);line-height:1;letter-spacing:-2.8px;margin-bottom:15px}
+.premium-muted{color:var(--muted);line-height:1.8;max-width:700px}
+.premium-split{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:stretch}
+.premium-panel{position:relative;padding:30px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);backdrop-filter:blur(18px);overflow:hidden}
+.premium-panel:after{content:"";position:absolute;inset:auto -25% -60% -25%;height:180px;background:radial-gradient(ellipse,rgba(0,217,255,.10),transparent 65%);pointer-events:none}
+.premium-about-list{display:grid;gap:11px;margin-top:22px}
+.premium-about-item{display:flex;align-items:center;gap:13px;padding:13px 14px;border:1px solid var(--border);border-radius:14px;background:var(--card2)}
+.premium-about-item i{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;color:var(--cyan);background:var(--card)}
+.premium-about-item small{display:block;color:var(--muted);margin-top:2px}
+.premium-skills{display:grid;gap:18px;margin-top:8px}
+.premium-skill-head{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;font-weight:700}
+.premium-skill-head span:last-child{color:var(--cyan)}
+.premium-skill-bar{height:7px;border-radius:999px;background:var(--card2);overflow:hidden}
+.premium-skill-bar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width 1.2s var(--ease)}
+.premium-projects{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.premium-project{position:relative;min-height:260px;padding:25px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card);overflow:hidden;transition:.4s var(--ease)}
+.premium-project:hover{transform:translateY(-9px);border-color:rgba(0,217,255,.35);box-shadow:var(--shadow)}
+.premium-project .project-number{position:absolute;right:16px;top:-5px;font:800 80px "Space Grotesk";color:rgba(255,255,255,.035)}
+.premium-project-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,rgba(139,92,255,.2),rgba(0,217,255,.1));color:var(--cyan);font-size:21px;margin-bottom:22px}
+.premium-project h3{font-size:20px;margin-bottom:9px}
+.premium-project p{color:var(--muted);font-size:13px;line-height:1.75;margin-bottom:17px}
+.premium-project-actions{display:flex;gap:8px;flex-wrap:wrap}
+.premium-project-actions a{padding:9px 12px;border:1px solid var(--border);border-radius:11px;font-size:11px;font-weight:800;background:var(--card2);transition:.25s}
+.premium-project-actions a:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.premium-filter{display:flex;gap:8px;flex-wrap:wrap;margin-top:24px}
+.premium-filter button{border:1px solid var(--border);background:var(--card);color:var(--muted);padding:9px 13px;border-radius:999px;cursor:pointer;font-size:11px;font-weight:800;transition:.25s}
+.premium-filter button.active,.premium-filter button:hover{color:var(--text);border-color:var(--cyan);background:var(--card2)}
+.premium-timeline{position:relative;margin-top:30px;padding-left:28px}
+.premium-timeline:before{content:"";position:absolute;left:6px;top:0;bottom:0;width:1px;background:var(--border)}
+.premium-time-item{position:relative;padding:0 0 28px 25px}
+.premium-time-item:before{content:"";position:absolute;left:-28px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px rgba(0,217,255,.6)}
+.premium-time-item b{font-size:12px;color:var(--cyan)}
+.premium-time-item h3{font-size:18px;margin:6px 0}
+.premium-time-item p{font-size:13px;line-height:1.7;color:var(--muted)}
+.premium-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:25px}
+.premium-stat{padding:23px 15px;text-align:center;border:1px solid var(--border);border-radius:18px;background:var(--card);transition:.3s}
+.premium-stat:hover{transform:translateY(-5px);border-color:rgba(0,217,255,.3)}
+.premium-stat strong{font:800 34px "Space Grotesk";display:block}
+.premium-stat span{font-size:11px;color:var(--muted)}
+.premium-certificates{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px}
+.premium-cert{padding:24px;border:1px solid var(--border);border-radius:22px;background:var(--card);transition:.3s}
+.premium-cert:hover{transform:translateY(-6px);border-color:rgba(139,92,255,.35)}
+.premium-cert i{font-size:26px;color:var(--cyan);margin-bottom:17px}
+.premium-cert h3{font-size:17px;margin-bottom:7px}
+.premium-cert p{font-size:12px;color:var(--muted);line-height:1.7}
+.premium-contact{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:30px}
+.premium-contact-box{padding:30px;border:1px solid var(--border);border-radius:var(--radius);background:var(--card)}
+.premium-contact-form{display:grid;gap:11px;margin-top:20px}
+.premium-contact-form input,.premium-contact-form textarea{width:100%;border:1px solid var(--border);outline:0;border-radius:13px;background:var(--card2);color:var(--text);padding:13px 14px;font:13px Inter}
+.premium-contact-form textarea{min-height:120px;resize:vertical}
+.premium-contact-form input:focus,.premium-contact-form textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,217,255,.07)}
+.premium-socials{display:grid;gap:10px;margin-top:20px}
+.premium-socials a{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--border);border-radius:13px;background:var(--card2);font-size:12px;font-weight:700;transition:.25s}
+.premium-socials a:hover{transform:translateX(5px);border-color:var(--cyan)}
+.premium-footer{padding:30px 0 35px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:11px}
+.premium-top{position:fixed;right:22px;bottom:22px;width:44px;height:44px;border:1px solid var(--border);border-radius:14px;background:var(--card);color:var(--text);cursor:pointer;opacity:0;pointer-events:none;transition:.3s;z-index:900}
+.premium-top.show{opacity:1;pointer-events:auto}
+.premium-toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);padding:12px 17px;border:1px solid var(--border);border-radius:13px;background:var(--bg2);box-shadow:var(--shadow);font-size:12px;opacity:0;pointer-events:none;transition:.3s;z-index:11000}
+.premium-toast.show{opacity:1;transform:translate(-50%,0)}
+.premium-reveal{opacity:0;transform:translateY(25px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.premium-reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:900px){
+ .premium-split,.premium-contact{grid-template-columns:1fr}
+ .premium-projects,.premium-certificates{grid-template-columns:repeat(2,1fr)}
+ .premium-stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+ body{cursor:auto}
+ .premium-cursor,.premium-cursor-ring{display:none}
+ .premium-projects,.premium-certificates{grid-template-columns:1fr}
+ .premium-panel,.premium-contact-box{padding:22px}
+ .premium-title{letter-spacing:-2px}
+ .premium-top{right:15px;bottom:15px}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+</style>
+
+
+<style id="social-contact-premium-css">
+.social-hub{padding:95px 0 80px}
+.social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:28px}
+.social-card{display:flex;align-items:center;gap:15px;padding:19px;border:1px solid var(--border);border-radius:18px;background:var(--card);transition:.35s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden}
+.social-card:hover{transform:translateY(-6px);border-color:rgba(0,217,255,.35);box-shadow:var(--shadow)}
+.social-card .social-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:14px;background:var(--card2);font-size:20px;color:var(--cyan);flex:none}
+.social-card h3{font-size:14px;margin:0 0 4px}
+.social-card p{font-size:11px;color:var(--muted);margin:0;word-break:break-word}
+.social-card .social-arrow{margin-left:auto;color:var(--muted);font-size:12px}
+.contact-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;margin-top:20px}
+.contact-info{padding:15px;border:1px solid var(--border);border-radius:14px;background:var(--card2)}
+.contact-info b{display:block;font-size:11px;margin-bottom:5px}
+.contact-info span{font-size:11px;color:var(--muted);word-break:break-word}
+.availability{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid var(--border);border-radius:999px;background:var(--card2);font-size:11px;font-weight:700;margin-top:17px}
+.availability i{font-size:7px;color:#35e68b;filter:drop-shadow(0 0 5px #35e68b)}
+.quick-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.quick-actions a{display:inline-flex;align-items:center;gap:8px;padding:11px 13px;border-radius:12px;border:1px solid var(--border);background:var(--card2);font-size:11px;font-weight:800;transition:.25s}
+.quick-actions a:hover{border-color:var(--cyan);transform:translateY(-2px)}
+.link-note{font-size:10px;color:var(--muted);margin-top:12px;line-height:1.6}
+@media(max-width:900px){.social-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.social-grid{grid-template-columns:1fr}.contact-info-grid{grid-template-columns:1fr}}
+</style>
+
+</head>
+
+<body>
+
+
+<!-- ================= BACKGROUND ================= -->
+
+<div class="background">
+
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+</div>
+
+<div id="particles"></div>
+
+<div class="cursor" id="cursor"></div>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <a href="#home" class="logo">
+        LAZIZBEK<span>.</span>
+    </a>
+
+    <nav>
+
+        <ul class="nav-links" id="navLinks">
+
+            <li>
+                <a class="active" href="#home">
+                    Bosh sahifa
+                </a>
+            </li>
+
+            <li>
+                <a href="#about">
+                    Men haqimda
+                </a>
+            </li>
+
+            <li>
+                <a href="#works">
+                    Ishlarim
+                </a>
+            </li>
+
+            <li>
+                <a href="#skills">
+                    Ko‘nikmalar
+                </a>
+            </li>
+
+            <li>
+                <a href="#projects">
+                    Loyihalar
+                </a>
+            </li>
+
+            <li>
+                <a href="#collaboration">
+                    Hamkorlik
+                </a>
+            </li>
+
+            <li>
+                <a href="#contact">
+                    Aloqa
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+    <div class="nav-buttons">
+
+        <button
+            class="icon-button"
+            id="themeButton">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <button
+            class="icon-button menu-button"
+            id="menuButton">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= HOME ================= -->
+
+<section id="home">
+
+<div class="container hero">
+
+    <div class="hero-content reveal">
+
+        <div class="status">
+
+            <span class="online-dot"></span>
+
+            <strong>AI ONLINE</strong>
+
+            — ovozli yordamchi faol
+
+        </div>
+
+        <h1>
+
+            <small>
+                Salom, men
+            </small>
+
+            <span class="gradient">
+                Lazizbek AI
+            </span>
+
+        </h1>
+
+        <p class="hero-text">
+
+            Men Lazizbekning shaxsiy AI yordamchisiman.
+            Savollaringizga javob beraman, siz bilan
+            suhbatlashaman va ovoz orqali ham ishlay olaman.
+
+        </p>
+
+        <div class="buttons">
+
+            <a
+                href="#works"
+                class="btn">
+
+                <i class="fa-solid fa-briefcase"></i>
+
+                Qilgan ishlarim
+
+            </a>
+
+            <button
+                class="btn btn-outline"
+                id="openAI">
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI bilan gaplashish
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- AI -->
+
+    <div class="ai-visual reveal">
+
+        <div class="orb-wrapper">
+
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+
+            <div class="ai-orb">
+
+                <div>
+
+                    <i class="fa-solid fa-robot"></i>
+
+                    <strong>
+                        AI ASSISTANT
+                    </strong>
+
+                    <small>
+                        Gaplashishga tayyor
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+<div class="container">
+
+    <div class="reveal">
+
+        <div class="eyebrow">
+            01 — MEN HAQIMDA
+        </div>
+
+        <h2 class="section-title">
+
+            Men kimman va
+            <span class="gradient">
+                nima qilaman?
+            </span>
+
+        </h2>
+
+        <p class="description">
+
+            Men — Lazizbek.
+            Zamonaviy texnologiyalar, web dasturlash,
+            dizayn va AI loyihalariga qiziqaman.
+            Ushbu portfolio mening faoliyatim va
+            loyihalarimni namoyish qilish uchun yaratilgan.
+
+        </p>
+
+    </div>
+
+    <br><br>
+
+    <div class="about-grid">
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-user"></i>
+            </div>
+
+            <h3>
+                Men haqimda
+            </h3>
+
+            <p>
+
+                Kreativ fikrlash, yangi texnologiyalarni
+                o‘rganish va foydali raqamli mahsulotlar
+                yaratishga intilaman.
+
+            </p>
+
+            <div class="info-list">
+
+                <div class="info">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <div>
+
+                        <b>
+                            Joylashuv
+                        </b>
+
+                        <span>
+                            O‘zbekiston
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="info">
+
+                    <i class="fa-solid fa-laptop-code"></i>
+
+                    <div>
+
+                        <b>
+                            Yo‘nalish
+                        </b>
+
+                        <span>
+                            Web • AI • Design
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="info">
+
+                    <i class="fa-solid fa-bullseye"></i>
+
+                    <div>
+
+                        <b>
+                            Maqsad
+                        </b>
+
+                        <span>
+                            Zamonaviy raqamli mahsulotlar yaratish
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
+            <h3>
+                Nimalarga qiziqaman?
+            </h3>
+
+            <div class="info-list">
+
+                <div class="info">
+
+                    <i class="fa-solid fa-code"></i>
+
+                    <div>
+
+                        <b>
+                            Web Development
+                        </b>
+
+                        <span>
+                            Zamonaviy va responsive saytlar.
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="info">
+
+                    <i class="fa-solid fa-robot"></i>
+
+                    <div>
+
+                        <b>
+                            Sun’iy intellekt
+                        </b>
+
+                        <span>
+                            AI chatbot va interaktiv yordamchilar.
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="info">
+
+                    <i class="fa-solid fa-palette"></i>
+
+                    <div>
+
+                        <b>
+                            Design
+                        </b>
+
+                        <span>
+                            UI/UX va kreativ dizayn.
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="info">
+
+                    <i class="fa-solid fa-mobile-screen"></i>
+
+                    <div>
+
+                        <b>
+                            Responsive
+                        </b>
+
+                        <span>
+                            Telefon, planshet va kompyuter.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= WORKS ================= -->
+
+<section id="works">
+
+<div class="container">
+
+    <div class="reveal">
+
+        <div class="eyebrow">
+            02 — QILGAN ISHLARIM
+        </div>
+
+        <h2 class="section-title">
+
+            Men qilgan
+            <span class="gradient">
+                ishlar
+            </span>
+
+        </h2>
+
+        <p class="description">
+
+            Bu bo‘limga o‘zingizning haqiqiy ishlaringizni
+            qo‘shishingiz mumkin.
+
+        </p>
+
+    </div>
+
+    <br><br>
+
+    <div class="work-grid">
+
+        <article class="card work reveal">
+
+            <span class="work-number">
+                01
+            </span>
+
+            <div class="work-icon">
+                <i class="fa-solid fa-globe"></i>
+            </div>
+
+            <h3>
+                Web saytlar
+            </h3>
+
+            <p>
+
+                Portfolio, landing page,
+                o‘quv markazi va boshqa
+                zamonaviy web saytlar.
+
+            </p>
+
+        </article>
+
+
+        <article class="card work reveal">
+
+            <span class="work-number">
+                02
+            </span>
+
+            <div class="work-icon">
+                <i class="fa-solid fa-robot"></i>
+            </div>
+
+            <h3>
+                AI loyihalar
+            </h3>
+
+            <p>
+
+                AI chatbotlar, AI interfeyslar
+                va foydalanuvchi bilan
+                suhbatlashuvchi tizimlar.
+
+            </p>
+
+        </article>
+
+
+        <article class="card work reveal">
+
+            <span class="work-number">
+                03
+            </span>
+
+            <div class="work-icon">
+                <i class="fa-solid fa-paintbrush"></i>
+            </div>
+
+            <h3>
+                Dizayn ishlari
+            </h3>
+
+            <p>
+
+                Banner, poster, kitob muqovasi,
+                UI/UX va kreativ dizaynlar.
+
+            </p>
+
+        </article>
+
+
+        <article class="card work reveal">
+
+            <span class="work-number">
+                04
+            </span>
+
+            <div class="work-icon">
+                <i class="fa-solid fa-mobile-screen"></i>
+            </div>
+
+            <h3>
+                Responsive loyihalar
+            </h3>
+
+            <p>
+
+                Barcha ekranlarda ishlaydigan
+                zamonaviy va qulay interfeyslar.
+
+            </p>
+
+        </article>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section id="skills">
+
+<div class="container">
+
+    <div class="reveal">
+
+        <div class="eyebrow">
+            03 — KO‘NIKMALAR
+        </div>
+
+        <h2 class="section-title">
+
+            Mening
+            <span class="gradient">
+                ko‘nikmalarim
+            </span>
+
+        </h2>
+
+    </div>
+
+    <br><br>
+
+    <div class="skills-layout">
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+
+            <h3>
+                Creative Developer
+            </h3>
+
+            <p>
+
+                Web dasturlash, AI va dizaynni
+                birlashtirib, zamonaviy raqamli
+                tajribalar yaratishga intilaman.
+
+            </p>
+
+        </div>
+
+
+        <div class="skill-list reveal">
+
+            <div class="skill">
+
+                <div class="skill-top">
+
+                    <span>
+                        HTML / CSS
+                    </span>
+
+                    <span>
+                        95%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-fill"
+                        data-width="95%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-top">
+
+                    <span>
+                        JavaScript
+                    </span>
+
+                    <span>
+                        88%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-fill"
+                        data-width="88%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-top">
+
+                    <span>
+                        UI / UX
+                    </span>
+
+                    <span>
+                        85%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-fill"
+                        data-width="85%">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="skill">
+
+                <div class="skill-top">
+
+                    <span>
+                        AI / Prompt
+                    </span>
+
+                    <span>
+                        90%
+                    </span>
+
+                </div>
+
+                <div class="progress">
+
+                    <div
+                        class="progress-fill"
+                        data-width="90%">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects">
+
+<div class="container">
+
+    <div class="reveal">
+
+        <div class="eyebrow">
+            04 — LOYIHALAR
+        </div>
+
+        <h2 class="section-title">
+
+            Tanlangan
+            <span class="gradient">
+                loyihalar
+            </span>
+
+        </h2>
+
+    </div>
+
+    <br><br>
+
+    <div class="grid">
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-comments"></i>
+            </div>
+
+            <h3>
+                AI Chat
+            </h3>
+
+            <p>
+
+                Foydalanuvchi bilan muloqot
+                qiladigan zamonaviy AI chat
+                interfeysi.
+
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-code"></i>
+            </div>
+
+            <h3>
+                Portfolio
+            </h3>
+
+            <p>
+
+                Dynamic animatsiyalar va
+                responsive dizaynga ega
+                shaxsiy portfolio.
+
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <h3>
+                Dashboard
+            </h3>
+
+            <p>
+
+                Ma’lumotlarni zamonaviy
+                interfeys orqali ko‘rsatadigan
+                dashboard.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= COLLABORATION ================= -->
+
+<section id="collaboration">
+
+<div class="container">
+
+    <div class="reveal">
+
+        <div class="eyebrow">
+            05 — HAMKORLIK
+        </div>
+
+        <h2 class="section-title">
+
+            Birgalikda
+            <span class="gradient">
+                ishlaymizmi?
+            </span>
+
+        </h2>
+
+        <p class="description">
+
+            Web sayt, AI platforma, dizayn yoki
+            boshqa raqamli loyiha bo‘yicha
+            hamkorlik qilish mumkin.
+
+        </p>
+
+    </div>
+
+    <br><br>
+
+    <div class="collab-grid">
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-handshake"></i>
+            </div>
+
+            <h3>
+                Qanday loyihalarda?
+            </h3>
+
+            <div class="info-list">
+
+                <div class="info">
+
+                    <i class="fa-solid fa-globe"></i>
+
+                    <div>
+
+                        <b>
+                            Web sayt
+                        </b>
+
+                        <span>
+                            Landing, portfolio va korporativ saytlar.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <i class="fa-solid fa-robot"></i>
+
+                    <div>
+
+                        <b>
+                            AI loyiha
+                        </b>
+
+                        <span>
+                            Chatbot va AI platformalar.
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <i class="fa-solid fa-palette"></i>
+
+                    <div>
+
+                        <b>
+                            Design
+                        </b>
+
+                        <span>
+                            UI/UX va kreativ dizayn.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-list-check"></i>
+            </div>
+
+            <h3>
+                Hamkorlik jarayoni
+            </h3>
+
+            <div class="timeline">
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <h3>
+                        01. G‘oya
+                    </h3>
+
+                    <p>
+                        Loyiha maqsadi va vazifalarini aniqlaymiz.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <h3>
+                        02. Dizayn
+                    </h3>
+
+                    <p>
+                        Interfeys va foydalanuvchi tajribasini ishlab chiqamiz.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <h3>
+                        03. Ishlab chiqish
+                    </h3>
+
+                    <p>
+                        Loyihani kodlaymiz va funksiyalarni qo‘shamiz.
+                    </p>
+
+                </div>
+
+
+                <div class="timeline-item">
+
+                    <span class="timeline-dot"></span>
+
+                    <h3>
+                        04. Natija
+                    </h3>
+
+                    <p>
+                        Tayyor loyihani tekshirib, yakunlaymiz.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact">
+
+<div class="container">
+
+    <div class="reveal">
+
+        <div class="eyebrow">
+            06 — ALOQA
+        </div>
+
+        <h2 class="section-title">
+
+            Men bilan
+            <span class="gradient">
+                bog‘laning
+            </span>
+
+        </h2>
+
+        <p class="description">
+
+            Hamkorlik yoki loyiha bo‘yicha
+            bog‘lanish uchun quyidagi
+            platformalardan foydalanishingiz mumkin.
+
+        </p>
+
+    </div>
+
+    <br><br>
+
+    <div class="contact-grid">
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+
+            <h3>
+                Ijtimoiy tarmoqlar
+            </h3>
+
+            <div class="social-grid">
+
+                <a
+                    href="https://instagram.com/"
+                    target="_blank"
+                    class="social">
+
+                    <i class="fa-brands fa-instagram"></i>
+
+                    <span>
+                        Instagram
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="https://t.me/"
+                    target="_blank"
+                    class="social">
+
+                    <i class="fa-brands fa-telegram"></i>
+
+                    <span>
+                        Telegram
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="https://facebook.com/"
+                    target="_blank"
+                    class="social">
+
+                    <i class="fa-brands fa-facebook"></i>
+
+                    <span>
+                        Facebook
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="https://wa.me/"
+                    target="_blank"
+                    class="social">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    <span>
+                        WhatsApp
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="mailto:you@example.com"
+                    class="social">
+
+                    <i class="fa-solid fa-envelope"></i>
+
+                    <span>
+                        Email
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="#home"
+                    class="social">
+
+                    <i class="fa-solid fa-link"></i>
+
+                    <span>
+                        Website
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="card-icon">
+                <i class="fa-solid fa-quote-left"></i>
+            </div>
+
+            <h3>
+                Lazizbek AI
+            </h3>
+
+            <p style="margin-top:15px">
+
+                “Yaxshi texnologiya —
+                inson uchun qulay va
+                foydali bo‘lgan texnologiya.”
+
+            </p>
+
+            <br>
+
+            <button
+                class="btn"
+                id="contactAI">
+
+                <i class="fa-solid fa-robot"></i>
+
+                AI bilan suhbat
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container footer">
+
+    <span>
+
+        ©
+        <span id="year"></span>
+        Lazizbek. Barcha huquqlar himoyalangan.
+
+    </span>
+
+    <a
+        href="#home"
+        class="top">
+
+        <i class="fa-solid fa-arrow-up"></i>
+
+    </a>
+
+</div>
+
+</footer>
+
+
+<!-- ================= AI BUTTON ================= -->
+
+<button
+    class="ai-button"
+    id="aiButton">
+
+    <i class="fa-solid fa-robot"></i>
+
+</button>
+
+
+<!-- ================= AI CHAT ================= -->
+
+<div
+    class="ai-panel"
+    id="aiPanel">
+
+
+    <div class="ai-header">
+
+        <div class="ai-title">
+
+            <div class="ai-avatar">
+
+                <i class="fa-solid fa-robot"></i>
+
+            </div>
+
+            <div>
+
+                <b>
+                    Lazizbek AI
+                </b>
+
+                <small>
+                    ● Online • Ovozli yordamchi
+                </small>
+
+            </div>
+
+        </div>
+
+        <button
+            class="ai-close"
+            id="aiClose">
+
+            <i class="fa-solid fa-xmark"></i>
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="ai-messages"
+        id="aiMessages">
+
+        <!-- Birinchi AI xabar -->
+
+        <div class="message-box ai-box">
+
+            <div class="message ai">
+
+                Salom! 👋
+
+                Men Lazizbek AI yordamchisiman.
+
+                Menga savol bering.
+                Mikrofon tugmasini bosib
+                men bilan ovoz orqali ham gaplashishingiz mumkin. 🎙️
+
+            </div>
+
+            <div class="message-actions">
+
+                <button
+                    class="message-action copy-btn"
+                    title="Nusxalash">
+
+                    <i class="fa-regular fa-copy"></i>
+
+                </button>
+
+                <button
+                    class="message-action speak-btn"
+                    title="O‘qish">
+
+                    <i class="fa-solid fa-volume-high"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="ai-input-area">
+
+        <form
+            class="ai-form"
+            id="aiForm">
+
+            <input
+                id="aiInput"
+                class="ai-input"
+                autocomplete="off"
+                placeholder="AI ga savol bering...">
+
+            <button
+                type="button"
+                class="ai-mic"
+                id="aiMic"
+                title="Ovoz bilan gapirish">
+
+                <i class="fa-solid fa-microphone"></i>
+
+            </button>
+
+            <button
+                type="submit"
+                class="ai-send">
+
+                <i class="fa-solid fa-paper-plane"></i>
+
+            </button>
+
+        </form>
+
+        <div class="ai-note">
+
+            Mikrofon uchun brauzer ruxsati kerak.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+                    PARTICLES
+===================================================== */
+
+const particleBox =
+document.getElementById("particles");
+
+for(let i=0;i<90;i++){
+
+    const particle =
+    document.createElement("span");
+
+    particle.className="particle";
+
+    particle.style.left =
+    Math.random()*100+"%";
+
+    particle.style.animationDuration =
+    (7+Math.random()*14)+"s";
+
+    particle.style.animationDelay =
+    Math.random()*12+"s";
+
+    particle.style.opacity =
+    .15+Math.random()*.6;
+
+    particleBox.appendChild(particle);
+}
+
+
+/* =====================================================
+                    CURSOR
+===================================================== */
+
+const cursor =
+document.getElementById("cursor");
+
+window.addEventListener(
+    "mousemove",
+    function(e){
+
+        cursor.style.left =
+        e.clientX+"px";
+
+        cursor.style.top =
+        e.clientY+"px";
+
+    }
+);
+
+
+/* =====================================================
+                    MOBILE MENU
+===================================================== */
+
+const menuButton =
+document.getElementById("menuButton");
+
+const navLinks =
+document.getElementById("navLinks");
+
+menuButton.addEventListener(
+    "click",
+    function(){
+
+        navLinks.classList.toggle("open");
+
+        if(navLinks.classList.contains("open")){
+
+            menuButton.innerHTML =
+            '<i class="fa-solid fa-xmark"></i>';
+
+        }else{
+
+            menuButton.innerHTML =
+            '<i class="fa-solid fa-bars"></i>';
+
+        }
+
+    }
+);
+
+
+document
+.querySelectorAll(".nav-links a")
+.forEach(function(link){
+
+    link.addEventListener(
+        "click",
+        function(){
+
+            navLinks.classList.remove("open");
+
+            menuButton.innerHTML =
+            '<i class="fa-solid fa-bars"></i>';
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+                    THEME
+===================================================== */
+
+const themeButton =
+document.getElementById("themeButton");
+
+const savedTheme =
+localStorage.getItem("lazizbek-theme");
+
+if(savedTheme==="light"){
+
+    document.body.classList.add("light");
+
+}
+
+function updateThemeIcon(){
+
+    if(
+        document.body.classList.contains("light")
+    ){
+
+        themeButton.innerHTML =
+        '<i class="fa-solid fa-sun"></i>';
+
+    }else{
+
+        themeButton.innerHTML =
+        '<i class="fa-solid fa-moon"></i>';
+
+    }
+
+}
+
+updateThemeIcon();
+
+
+themeButton.addEventListener(
+    "click",
+    function(){
+
+        document.body.classList.toggle("light");
+
+        localStorage.setItem(
+            "lazizbek-theme",
+
+            document.body.classList.contains("light")
+            ? "light"
+            : "dark"
+        );
+
+        updateThemeIcon();
+
+    }
+);
+
+
+/* =====================================================
+                    SCROLL REVEAL
+===================================================== */
+
+const revealObserver =
+new IntersectionObserver(
+
+    function(entries){
+
+        entries.forEach(
+            function(entry){
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add("show");
+
+                    entry.target
+                    .querySelectorAll(".progress-fill")
+                    .forEach(function(fill){
+
+                        fill.style.width =
+                        fill.dataset.width;
+
+                    });
+
+                }
+
+            }
+        );
+
+    },
+
+    {
+        threshold:.12
+    }
+
+);
+
+
+document
+.querySelectorAll(".reveal")
+.forEach(function(element){
+
+    revealObserver.observe(element);
+
+});
+
+
+/* =====================================================
+                    CARD GLOW
+===================================================== */
+
+document
+.querySelectorAll(".card")
+.forEach(function(card){
+
+    card.addEventListener(
+        "mousemove",
+        function(e){
+
+            const rect =
+            card.getBoundingClientRect();
+
+            card.style.setProperty(
+                "--mx",
+                e.clientX-rect.left+"px"
+            );
+
+            card.style.setProperty(
+                "--my",
+                e.clientY-rect.top+"px"
+            );
+
+        }
+    );
+
+});
+
+
+/* =====================================================
+                    ACTIVE NAV
+===================================================== */
+
+const sections =
+document.querySelectorAll("section[id]");
+
+const links =
+document.querySelectorAll(".nav-links a");
+
+
+const navObserver =
+new IntersectionObserver(
+
+    function(entries){
+
+        entries.forEach(
+            function(entry){
+
+                if(entry.isIntersecting){
+
+                    links.forEach(
+                        function(link){
+
+                            link.classList.remove("active");
+
+                        }
+                    );
+
+
+                    const active =
+                    document.querySelector(
+                        '.nav-links a[href="#'+
+                        entry.target.id+
+                        '"]'
+                    );
+
+
+                    if(active){
+
+                        active.classList.add("active");
+
+                    }
+
+                }
+
+            }
+        );
+
+    },
+
+    {
+        rootMargin:
+        "-35% 0px -55% 0px"
+    }
+
+);
+
+
+sections.forEach(
+    function(section){
+
+        navObserver.observe(section);
+
+    }
+);
+
+
+/* =====================================================
+                    YEAR
+===================================================== */
+
+document.getElementById("year")
+.textContent =
+new Date().getFullYear();
+
+
+/* =====================================================
+                    AI SYSTEM
+===================================================== */
+
+const aiButton =
+document.getElementById("aiButton");
+
+const aiPanel =
+document.getElementById("aiPanel");
+
+const aiClose =
+document.getElementById("aiClose");
+
+const openAI =
+document.getElementById("openAI");
+
+const contactAI =
+document.getElementById("contactAI");
+
+const aiForm =
+document.getElementById("aiForm");
+
+const aiInput =
+document.getElementById("aiInput");
+
+const aiMessages =
+document.getElementById("aiMessages");
+
+const aiMic =
+document.getElementById("aiMic");
+
+
+/* =====================================================
+                    OPEN AI
+===================================================== */
+
+function openAIChat(){
+
+    aiPanel.classList.add("open");
+
+    aiButton.style.display="none";
+
+    setTimeout(
+        function(){
+
+            aiInput.focus();
+
+        },
+        200
+    );
+
+}
+
+
+aiButton.addEventListener(
+    "click",
+    openAIChat
+);
+
+openAI.addEventListener(
+    "click",
+    openAIChat
+);
+
+contactAI.addEventListener(
+    "click",
+    openAIChat
+);
+
+
+/* =====================================================
+                    CLOSE AI
+===================================================== */
+
+aiClose.addEventListener(
+    "click",
+    function(){
+
+        aiPanel.classList.remove("open");
+
+        aiButton.style.display="block";
+
+        /* Agar ovoz o‘qilayotgan bo‘lsa to‘xtatadi */
+
+        if("speechSynthesis" in window){
+
+            speechSynthesis.cancel();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+                    COPY TEXT
+===================================================== */
+
+async function copyText(text,button){
+
+    try{
+
+        await navigator.clipboard.writeText(text);
+
+        const oldHTML =
+        button.innerHTML;
+
+        button.innerHTML =
+        '<i class="fa-solid fa-check"></i>';
+
+        button.classList.add("copy-success");
+
+        setTimeout(
+            function(){
+
+                button.innerHTML =
+                oldHTML;
+
+                button.classList.remove(
+                    "copy-success"
+                );
+
+            },
+            1200
+        );
+
+    }catch(error){
+
+        /* Eski brauzerlar uchun */
+
+        const textarea =
+        document.createElement("textarea");
+
+        textarea.value=text;
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        textarea.remove();
+
+        const oldHTML =
+        button.innerHTML;
+
+        button.innerHTML =
+        '<i class="fa-solid fa-check"></i>';
+
+        button.classList.add("copy-success");
+
+        setTimeout(
+            function(){
+
+                button.innerHTML =
+                oldHTML;
+
+                button.classList.remove(
+                    "copy-success"
+                );
+
+            },
+            1200
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+                    SPEAK TEXT
+===================================================== */
+
+function speak(text,button){
+
+    if(!("speechSynthesis" in window)){
+
+        alert(
+            "Bu brauzer ovoz chiqarib o‘qishni qo‘llab-quvvatlamaydi."
+        );
+
+        return;
+
+    }
+
+    /* Agar ayni paytda ovoz o‘qiyotgan bo‘lsa,
+       shu tugmani bosish orqali to‘xtatadi */
+
+    if(
+        speechSynthesis.speaking &&
+        button.classList.contains("reading")
+    ){
+
+        speechSynthesis.cancel();
+
+        button.classList.remove("reading");
+
+        button.innerHTML =
+        '<i class="fa-solid fa-volume-high"></i>';
+
+        return;
+
+    }
+
+    /* Boshqa ovozni to‘xtatish */
+
+    speechSynthesis.cancel();
+
+    document
+    .querySelectorAll(".speak-btn")
+    .forEach(function(btn){
+
+        btn.classList.remove("reading");
+
+        btn.innerHTML =
+        '<i class="fa-solid fa-volume-high"></i>';
+
+    });
+
+
+    const cleanText =
+    text
+    .replace(/[\*\_#\`]/g,"")
+    .replace(/\n+/g," ");
+
+
+    const voice =
+    new SpeechSynthesisUtterance(
+        cleanText
+    );
+
+
+    voice.lang="uz-UZ";
+
+    voice.rate=.95;
+
+    voice.pitch=1;
+
+
+    const voices =
+    speechSynthesis.getVoices();
+
+
+    const uzbekVoice =
+    voices.find(
+        function(v){
+
+            return v.lang
+            .toLowerCase()
+            .startsWith("uz");
+
+        }
+    );
+
+
+    if(uzbekVoice){
+
+        voice.voice =
+        uzbekVoice;
+
+    }
+
+
+    button.classList.add("reading");
+
+    button.innerHTML =
+    '<i class="fa-solid fa-stop"></i>';
+
+
+    voice.onend =
+    function(){
+
+        button.classList.remove("reading");
+
+        button.innerHTML =
+        '<i class="fa-solid fa-volume-high"></i>';
+
+    };
+
+
+    voice.onerror =
+    function(){
+
+        button.classList.remove("reading");
+
+        button.innerHTML =
+        '<i class="fa-solid fa-volume-high"></i>';
+
+    };
+
+
+    speechSynthesis.speak(voice);
+
+}
+
+
+/* =====================================================
+                ADD MESSAGE WITH BUTTONS
+===================================================== */
+
+function addMessage(text,type){
+
+    const box =
+    document.createElement("div");
+
+    if(type==="ai"){
+
+        box.className =
+        "message-box ai-box";
+
+    }else{
+
+        box.className =
+        "message-box user-box";
+
+    }
+
+
+    const message =
+    document.createElement("div");
+
+    message.className =
+    "message "+type;
+
+    message.textContent=text;
+
+
+    const actions =
+    document.createElement("div");
+
+    actions.className =
+    "message-actions";
+
+
+    /* COPY BUTTON */
+
+    const copyButton =
+    document.createElement("button");
+
+    copyButton.className =
+    "message-action copy-btn";
+
+    copyButton.title =
+    "Nusxalash";
+
+    copyButton.innerHTML =
+    '<i class="fa-regular fa-copy"></i>';
+
+
+    copyButton.addEventListener(
+        "click",
+        function(){
+
+            copyText(
+                message.textContent,
+                copyButton
+            );
+
+        }
+    );
+
+
+    /* SPEAK BUTTON */
+
+    const speakButton =
+    document.createElement("button");
+
+    speakButton.className =
+    "message-action speak-btn";
+
+    speakButton.title =
+    "O‘qish";
+
+    speakButton.innerHTML =
+    '<i class="fa-solid fa-volume-high"></i>';
+
+
+    speakButton.addEventListener(
+        "click",
+        function(){
+
+            speak(
+                message.textContent,
+                speakButton
+            );
+
+        }
+    );
+
+
+    actions.appendChild(copyButton);
+
+    actions.appendChild(speakButton);
+
+
+    box.appendChild(message);
+
+    box.appendChild(actions);
+
+
+    aiMessages.appendChild(box);
+
+
+    aiMessages.scrollTop =
+    aiMessages.scrollHeight;
+
+
+    return message;
+
+}
+
+
+/* =====================================================
+                EXISTING MESSAGE BUTTONS
+===================================================== */
+
+document
+.querySelectorAll(".message-box")
+.forEach(function(box){
+
+    const message =
+    box.querySelector(".message");
+
+    const copyButton =
+    box.querySelector(".copy-btn");
+
+    const speakButton =
+    box.querySelector(".speak-btn");
+
+
+    if(copyButton){
+
+        copyButton.addEventListener(
+            "click",
+            function(){
+
+                copyText(
+                    message.textContent,
+                    copyButton
+                );
+
+            }
+        );
+
+    }
+
+
+    if(speakButton){
+
+        speakButton.addEventListener(
+            "click",
+            function(){
+
+                speak(
+                    message.textContent,
+                    speakButton
+                );
+
+            }
+        );
+
+    }
+
+});
+
+
+/* =====================================================
+                    LOCAL AI
+===================================================== */
+
+function getAIAnswer(question){
+
+    const q =
+    question
+    .toLowerCase()
+    .trim();
+
+
+    if(!q){
+
+        return "Savolingizni yozing yoki mikrofon orqali gapiring.";
+
+    }
+
+
+    if(
+        q.includes("salom") ||
+        q.includes("assalom") ||
+        q.includes("hello") ||
+        q.includes("hi")
+    ){
+
+        return "Salom! 👋 Men Lazizbek AI yordamchisiman. Sizga qanday yordam beray?";
+
+    }
+
+
+    if(
+        q.includes("isming") ||
+        q.includes("kimsan") ||
+        q.includes("kim san")
+    ){
+
+        return "Men Lazizbek AI yordamchisiman. Men ushbu portfolio ichida siz bilan suhbatlashish va ma'lumot berish uchun yaratilganman.";
+
+    }
+
+
+    if(
+        q.includes("lazizbek")
+    ){
+
+        return "Lazizbek — ushbu portfolio egasi. Saytda uning ishlari, loyihalari, ko‘nikmalari va hamkorlik imkoniyatlari ko‘rsatilgan.";
+
+    }
+
+
+    if(
+        q.includes("nima qila") ||
+        q.includes("qobiliyat") ||
+        q.includes("funksiya")
+    ){
+
+        return "Men savollarga javob berish, suhbatlashish, mikrofon orqali ovoz qabul qilish va javoblarni siz xohlaganingizda ovoz chiqarib o‘qishim mumkin. Ovoz avtomatik yoqilmaydi.";
+
+    }
+
+
+    if(
+        q.includes("ish") ||
+        q.includes("nima qilgan") ||
+        q.includes("qilgan")
+    ){
+
+        return "Lazizbek web saytlar, AI loyihalar, UI/UX va kreativ raqamli loyihalar bilan shug‘ullanadi. Batafsil ma’lumot uchun Ishlarim bo‘limiga o‘ting.";
+
+    }
+
+
+    if(
+        q.includes("hamkor") ||
+        q.includes("buyurtma") ||
+        q.includes("birga ishlash")
+    ){
+
+        return "Albatta! Web sayt, AI loyiha yoki dizayn bo‘yicha hamkorlik qilish mumkin. Hamkorlik bo‘limidan batafsil ma’lumot olishingiz mumkin.";
+
+    }
+
+
+    if(
+        q.includes("manzil") ||
+        q.includes("qayer") ||
+        q.includes("joylashuv")
+    ){
+
+        return "Portfolio ma'lumotida joylashuv O‘zbekiston deb ko‘rsatilgan.";
+
+    }
+
+
+    if(
+        q.includes("html") ||
+        q.includes("css") ||
+        q.includes("javascript") ||
+        q.includes("web")
+    ){
+
+        return "HTML, CSS va JavaScript yordamida zamonaviy responsive web saytlar yaratish mumkin. Ushbu portfolio ham shu texnologiyalar asosida yaratilgan.";
+
+    }
+
+
+    if(
+        q.includes("ai") ||
+        q.includes("suniy intellekt") ||
+        q.includes("sun'iy intellekt")
+    ){
+
+        return "AI — sun’iy intellekt. Ushbu sahifadagi AI yordamchi demo rejimida ishlaydi va ovozli suhbat funksiyasiga ega. Javobni ovozda eshitish uchun xabarning 🔊 tugmasini bosing.";
+
+    }
+
+
+    if(
+        q.includes("rahmat") ||
+        q.includes("thanks")
+    ){
+
+        return "Arzimaydi! 😊 Yana savolingiz bo‘lsa bemalol so‘rang.";
+
+    }
+
+
+    if(
+        q.includes("yordam")
+    ){
+
+        return "Albatta. Savolingizni yozing yoki mikrofonni bosib gapiring. Men imkon qadar yordam beraman.";
+
+    }
+
+
+    return "Savolingizni tushundim. Hozir men demo AI rejimida ishlayapman. Istalgan savolga haqiqiy AI javoblarini olish uchun backend orqali AI API ulash kerak.";
+
+}
+
+
+/* =====================================================
+                    SEND MESSAGE
+===================================================== */
+
+aiForm.addEventListener(
+    "submit",
+    function(e){
+
+        e.preventDefault();
+
+
+        const question =
+        aiInput.value.trim();
+
+
+        if(!question){
+
+            return;
+
+        }
+
+
+        /* Foydalanuvchi xabari */
+
+        addMessage(
+            question,
+            "user"
+        );
+
+
+        aiInput.value="";
+
+
+        /* AI yozmoqda */
+
+        const typing =
+        addMessage(
+            "AI yozmoqda...",
+            "ai"
+        );
+
+
+        setTimeout(
+            function(){
+
+                const answer =
+                getAIAnswer(question);
+
+
+                typing.textContent =
+                answer;
+
+
+                /*
+                    MUHIM:
+                    Bu yerda speak(answer) YO‘Q.
+
+                    Shuning uchun AI javobi
+                    avtomatik o‘qilmaydi.
+                    Foydalanuvchi 🔊 tugmasini
+                    bosgandagina o‘qiladi.
+                */
+
+            },
+
+            500
+
+        );
+
+    }
+);
+
+
+/* =====================================================
+                    MICROPHONE
+===================================================== */
+
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+
+if(SpeechRecognition){
+
+    const recognition =
+    new SpeechRecognition();
+
+
+    recognition.lang="uz-UZ";
+
+    recognition.interimResults=false;
+
+    recognition.continuous=false;
+
+
+    aiMic.addEventListener(
+        "click",
+        function(){
+
+            try{
+
+                recognition.start();
+
+                aiMic.classList.add("active");
+
+                aiInput.placeholder =
+                "Gapiring...";
+
+            }
+
+            catch(error){
+
+                console.log(error);
+
+            }
+
+        }
+    );
+
+
+    recognition.onresult =
+    function(event){
+
+        const text =
+        event.results[0][0]
+        .transcript;
+
+
+        aiInput.value=text;
+
+
+        aiForm.requestSubmit();
+
+    };
+
+
+    recognition.onend =
+    function(){
+
+        aiMic.classList.remove(
+            "active"
+        );
+
+        aiInput.placeholder =
+        "AI ga savol bering...";
+
+    };
+
+
+    recognition.onerror =
+    function(){
+
+        aiMic.classList.remove(
+            "active"
+        );
+
+        aiInput.placeholder =
+        "AI ga savol bering...";
+
+    };
+
+}else{
+
+    aiMic.style.opacity=".4";
+
+    aiMic.title =
+    "Bu brauzer ovozli kiritishni qo‘llab-quvvatlamaydi.";
+
+}
+
+
+/* =====================================================
+                    ENTER KEY
+===================================================== */
+
+aiInput.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key==="Enter"){
+
+            e.preventDefault();
+
+            aiForm.requestSubmit();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+                    KEYBOARD THEME
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            e.key.toLowerCase()==="t" &&
+            document.activeElement.tagName!=="INPUT"
+        ){
+
+            themeButton.click();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+              SPEECH VOICES LOAD
+===================================================== */
+
+if("speechSynthesis" in window){
+
+    speechSynthesis.onvoiceschanged =
+    function(){
+
+        speechSynthesis.getVoices();
+
+    };
+
+}
+
+</script>
+
+
+<!-- ================= PORTFOLIO ADDITIONS ================= -->
+<section class="portfolio-extra" id="portfolio-projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="online-dot"></span> Portfolio</span>
+      <h2>Tanlangan <span class="gradient">loyihalar</span></h2>
+      <p>Men yaratgan loyihalar, texnologiyalar va amaliy ishlarim bilan tanishing.</p>
+    </div>
+
+    <div class="portfolio-projects">
+      <article class="portfolio-project reveal">
+        <div class="project-icon"><i class="fa-solid fa-robot"></i></div>
+        <h3>AI Assistant</h3>
+        <p>Zamonaviy interfeysga ega sun’iy intellekt yordamchisi loyihasi.</p>
+        <div class="portfolio-tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>AI</span></div>
+      </article>
+
+      <article class="portfolio-project reveal">
+        <div class="project-icon"><i class="fa-solid fa-film"></i></div>
+        <h3>Kino Platforma</h3>
+        <p>Kino qidirish, filtrlash va foydalanuvchi uchun qulay ko‘rish interfeysi.</p>
+        <div class="portfolio-tags"><span>Web</span><span>API</span><span>JavaScript</span></div>
+      </article>
+
+      <article class="portfolio-project reveal">
+        <div class="project-icon"><i class="fa-solid fa-code"></i></div>
+        <h3>Code Studio</h3>
+        <p>Kod yozish va loyihalarni boshqarish uchun yaratilgan web interfeys.</p>
+        <div class="portfolio-tags"><span>Frontend</span><span>UI/UX</span><span>JavaScript</span></div>
+      </article>
+    </div>
+
+    <div class="portfolio-stats reveal">
+      <div class="portfolio-stat"><strong>10+</strong><span>Loyihalar</span></div>
+      <div class="portfolio-stat"><strong>5+</strong><span>Texnologiyalar</span></div>
+      <div class="portfolio-stat"><strong>100%</strong><span>Motivatsiya</span></div>
+      <div class="portfolio-stat"><strong>24/7</strong><span>O‘rganish</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio-extra" id="portfolio-contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow"><span class="online-dot"></span> Aloqa</span>
+      <h2>Men bilan <span class="gradient">bog‘laning</span></h2>
+      <p>Loyiha, hamkorlik yoki boshqa savollar uchun ijtimoiy tarmoqlar orqali bog‘lanishingiz mumkin.</p>
+    </div>
+
+    <div class="portfolio-contact">
+      <div class="portfolio-contact-card reveal">
+        <h3>Birgalikda loyiha qilamiz</h3>
+        <p>Yangi g‘oya yoki web loyiha bo‘lsa, men bilan bog‘laning.</p>
+        <div class="portfolio-contact-links">
+          <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
+          <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+      </div>
+
+      <div class="portfolio-contact-card reveal">
+        <h3>Ijtimoiy tarmoqlar</h3>
+        <p>Yangiliklar va yangi loyihalarni kuzatib boring.</p>
+        <div class="portfolio-contact-links">
+          <a href="#"><i class="fa-brands fa-youtube"></i> YouTube</a>
+          <a href="#"><i class="fa-brands fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= PREMIUM PORTFOLIO SECTIONS ================= -->
+<div class="premium-progress" id="premiumProgress"></div>
+<div class="premium-cursor" id="premiumCursor"></div>
+<div class="premium-cursor-ring" id="premiumCursorRing"></div>
+<div class="premium-toast" id="premiumToast"></div>
+
+<section class="premium-section" id="about-premium">
+  <div class="container">
+    <div class="premium-split">
+      <div class="premium-panel premium-reveal">
+        <div class="section-kicker">About me</div>
+        <h2 class="premium-title">Men haqimda <span class="gradient">ko‘proq</span></h2>
+        <p class="premium-muted">Zamonaviy web loyihalar, kreativ interfeyslar va foydalanuvchi tajribasiga e’tibor qaratadigan developer portfolio.</p>
+        <div class="premium-about-list">
+          <div class="premium-about-item"><i class="fa-solid fa-code"></i><div><b>Web Development</b><small>Interaktiv va responsive web loyihalar</small></div></div>
+          <div class="premium-about-item"><i class="fa-solid fa-wand-magic-sparkles"></i><div><b>Creative UI</b><small>Minimal, zamonaviy va animatsiyali dizayn</small></div></div>
+          <div class="premium-about-item"><i class="fa-solid fa-lightbulb"></i><div><b>Continuous Learning</b><small>Yangi texnologiyalarni o‘rganish va tajriba</small></div></div>
+        </div>
+      </div>
+
+      <div class="premium-panel premium-reveal">
+        <div class="section-kicker">Skills</div>
+        <h2 class="premium-title">Mening <span class="gradient">ko‘nikmalarim</span></h2>
+        <div class="premium-skills">
+          <div><div class="premium-skill-head"><span>HTML / CSS</span><span>95%</span></div><div class="premium-skill-bar"><span data-width="95%"></span></div></div>
+          <div><div class="premium-skill-head"><span>JavaScript</span><span>88%</span></div><div class="premium-skill-bar"><span data-width="88%"></span></div></div>
+          <div><div class="premium-skill-head"><span>UI / UX</span><span>85%</span></div><div class="premium-skill-bar"><span data-width="85%"></span></div></div>
+          <div><div class="premium-skill-head"><span>AI / API</span><span>80%</span></div><div class="premium-skill-bar"><span data-width="80%"></span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="premium-section" id="premium-projects">
+  <div class="container">
+    <div class="premium-reveal">
+      <div class="section-kicker">My work</div>
+      <h2 class="premium-title">Tanlangan <span class="gradient">loyihalar</span></h2>
+      <p class="premium-muted">Portfolio’dagi eng muhim ishlarni yo‘nalish bo‘yicha ko‘rish mumkin.</p>
+      <div class="premium-filter" id="premiumFilter">
+        <button class="active" data-filter="all">Barchasi</button>
+        <button data-filter="web">Web</button>
+        <button data-filter="ai">AI</button>
+        <button data-filter="bot">Bot</button>
+      </div>
+    </div>
+
+    <div class="premium-projects" id="premiumProjectGrid">
+      <article class="premium-project premium-reveal" data-category="ai web">
+        <span class="project-number">01</span>
+        <div class="premium-project-icon"><i class="fa-solid fa-robot"></i></div>
+        <h3>AI Assistant</h3>
+        <p>AI bilan muloqot qilish uchun zamonaviy va responsive interfeys.</p>
+        <div class="portfolio-tags"><span>AI</span><span>JavaScript</span></div>
+        <div class="premium-project-actions"><a href="#" data-demo>Live Demo</a><a href="#" data-demo>GitHub</a></div>
+      </article>
+
+      <article class="premium-project premium-reveal" data-category="web">
+        <span class="project-number">02</span>
+        <div class="premium-project-icon"><i class="fa-solid fa-globe"></i></div>
+        <h3>Modern Web</h3>
+        <p>Animatsiyalar, responsive layout va premium visual effektlarga ega web loyiha.</p>
+        <div class="portfolio-tags"><span>HTML</span><span>CSS</span><span>JS</span></div>
+        <div class="premium-project-actions"><a href="#" data-demo>Live Demo</a><a href="#" data-demo>GitHub</a></div>
+      </article>
+
+      <article class="premium-project premium-reveal" data-category="bot ai">
+        <span class="project-number">03</span>
+        <div class="premium-project-icon"><i class="fa-brands fa-telegram"></i></div>
+        <h3>Telegram Bot</h3>
+        <p>Foydalanuvchi bilan ishlaydigan avtomatlashtirilgan Telegram bot loyihasi.</p>
+        <div class="portfolio-tags"><span>Node.js</span><span>Bot</span><span>API</span></div>
+        <div class="premium-project-actions"><a href="#" data-demo>Demo</a><a href="#" data-demo>GitHub</a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="premium-section" id="experience">
+  <div class="container">
+    <div class="premium-split">
+      <div class="premium-panel premium-reveal">
+        <div class="section-kicker">Journey</div>
+        <h2 class="premium-title">Mening <span class="gradient">yo‘lim</span></h2>
+        <div class="premium-timeline">
+          <div class="premium-time-item"><b>2024</b><h3>Web development</h3><p>Web texnologiyalarini o‘rganish va ilk loyihalarni yaratish.</p></div>
+          <div class="premium-time-item"><b>2025</b><h3>AI & API</h3><p>AI servislar, API va zamonaviy web interfeyslar bilan ishlash.</p></div>
+          <div class="premium-time-item"><b>2026</b><h3>Advanced projects</h3><p>Murakkabroq va professional ko‘rinishdagi loyihalarni ishlab chiqish.</p></div>
+        </div>
+      </div>
+
+      <div class="premium-panel premium-reveal">
+        <div class="section-kicker">Achievements</div>
+        <h2 class="premium-title">Raqamlar <span class="gradient">bilan</span></h2>
+        <div class="premium-stats">
+          <div class="premium-stat"><strong>10+</strong><span>Loyihalar</span></div>
+          <div class="premium-stat"><strong>5+</strong><span>Texnologiyalar</span></div>
+          <div class="premium-stat"><strong>3</strong><span>Yo‘nalish</span></div>
+          <div class="premium-stat"><strong>24/7</strong><span>Learning</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="premium-section" id="certificates">
+  <div class="container">
+    <div class="premium-reveal">
+      <div class="section-kicker">Certificates</div>
+      <h2 class="premium-title">Sertifikatlar va <span class="gradient">yutuqlar</span></h2>
+      <p class="premium-muted">Bu kartochkalarga keyinchalik haqiqiy sertifikatlaringizni joylashtirishingiz mumkin.</p>
+    </div>
+    <div class="premium-certificates">
+      <div class="premium-cert premium-reveal"><i class="fa-solid fa-award"></i><h3>Web Development</h3><p>Web development bo‘yicha sertifikat yoki kurs ma’lumotini shu yerga joylashtiring.</p></div>
+      <div class="premium-cert premium-reveal"><i class="fa-solid fa-certificate"></i><h3>JavaScript</h3><p>JavaScript bo‘yicha sertifikat va natijalarni ko‘rsatish uchun joy.</p></div>
+      <div class="premium-cert premium-reveal"><i class="fa-solid fa-star"></i><h3>Special Achievement</h3><p>Tanlov, loyiha yoki boshqa yutuqlarni shu yerda ko‘rsatish mumkin.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="premium-section" id="contact-premium">
+  <div class="container">
+    <div class="premium-reveal">
+      <div class="section-kicker">Contact</div>
+      <h2 class="premium-title">Keling, biror <span class="gradient">narsa yaratamiz</span></h2>
+      <p class="premium-muted">Hamkorlik yoki loyiha bo‘yicha bog‘lanish uchun quyidagi formadan foydalanishingiz mumkin.</p>
+    </div>
+    <div class="premium-contact">
+      <div class="premium-contact-box premium-reveal">
+        <h3>Send a message</h3>
+        <form class="premium-contact-form" id="premiumContactForm">
+          <input type="text" name="name" placeholder="Ismingiz" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="message" placeholder="Xabaringiz..." required></textarea>
+          <button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> Yuborish</button>
+        </form>
+      </div>
+      <div class="premium-contact-box premium-reveal">
+        <h3>Social links</h3>
+        <p class="premium-muted">Ijtimoiy tarmoqlardagi sahifalarim.</p>
+        <div class="premium-socials">
+          <a href="#" data-demo><i class="fa-brands fa-telegram"></i> Telegram</a>
+          <a href="#" data-demo><i class="fa-brands fa-instagram"></i> Instagram</a>
+          <a href="#" data-demo><i class="fa-brands fa-youtube"></i> YouTube</a>
+          <a href="#" data-demo><i class="fa-brands fa-github"></i> GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="premium-footer">
+  <div class="container">© 2026 Portfolio. Barcha huquqlar himoyalangan.</div>
+</footer>
+
+<button class="premium-top" id="premiumTop" aria-label="Yuqoriga"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script id="premium-portfolio-js">
+(function(){
+  const $ = (s, p=document) => p.querySelector(s);
+  const $$ = (s, p=document) => [...p.querySelectorAll(s)];
+
+  // Scroll progress
+  const progress = $('#premiumProgress');
+  const topBtn = $('#premiumTop');
+  function onScroll(){
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.width = (max > 0 ? (scrollY / max) * 100 : 0) + '%';
+    topBtn.classList.toggle('show', scrollY > 500);
+  }
+  addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+  // Reveal animations
+  const reveals = $$('.premium-reveal');
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        const bars = $$('.premium-skill-bar span', entry.target);
+        bars.forEach(bar=>bar.style.width=bar.dataset.width||'0');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.12});
+  reveals.forEach(el=>observer.observe(el));
+
+  // Skills also animate when their panel enters view
+  $$('.premium-skill-bar span').forEach(bar=>{
+    const panel = bar.closest('.premium-panel');
+    if(panel && !panel.classList.contains('premium-reveal')) bar.style.width=bar.dataset.width;
+  });
+
+  // Project filters
+  const filter = $('#premiumFilter');
+  if(filter){
+    filter.addEventListener('click', e=>{
+      const btn = e.target.closest('button');
+      if(!btn) return;
+      $$('.premium-filter button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const value = btn.dataset.filter;
+      $$('#premiumProjectGrid .premium-project').forEach(card=>{
+        const show = value === 'all' || (card.dataset.category||'').split(' ').includes(value);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  }
+
+  // Contact form demo
+  const form = $('#premiumContactForm');
+  const toast = $('#premiumToast');
+  function showToast(text){
+    toast.textContent=text;
+    toast.classList.add('show');
+    clearTimeout(window.__premiumToast);
+    window.__premiumToast=setTimeout(()=>toast.classList.remove('show'),2600);
+  }
+  if(form){
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      showToast('Xabaringiz tayyor. Formani email/Telegram backendiga ulashingiz mumkin.');
+      form.reset();
+    });
+  }
+
+  // Placeholder links
+  $$('[data-demo]').forEach(a=>a.addEventListener('click',e=>{
+    if(a.getAttribute('href') === '#'){
+      e.preventDefault();
+      showToast('Bu havolaga o‘zingizning URL manzilingizni qo‘ying.');
+    }
+  }));
+
+  // Premium cursor on desktop
+  const cursor=$('#premiumCursor'), ring=$('#premiumCursorRing');
+  if(matchMedia('(pointer:fine)').matches){
+    addEventListener('mousemove',e=>{
+      cursor.style.left=e.clientX+'px'; cursor.style.top=e.clientY+'px';
+      ring.style.left=e.clientX+'px'; ring.style.top=e.clientY+'px';
+      cursor.style.opacity='1'; ring.style.opacity='1';
+    });
+    $$('a,button,.card,.premium-project,.premium-panel').forEach(el=>{
+      el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+    });
+  }
+})();
+</script>
+
+
+<!-- ================= SOCIALS / CONTACT / EXTRA PREMIUM FEATURES ================= -->
+<section class="social-hub premium-section" id="social-hub">
+  <div class="container">
+    <div class="premium-reveal">
+      <div class="section-kicker">Find me online</div>
+      <h2 class="premium-title">Mening <span class="gradient">ijtimoiy tarmoqlarim</span></h2>
+      <p class="premium-muted">Menga qulay platforma orqali bog‘laning. Quyidagi manzillarni o‘zingizning haqiqiy profilingiz bilan almashtiring.</p>
+    </div>
+
+    <div class="social-grid">
+      <a class="social-card premium-reveal" href="https://t.me/USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-telegram"></i></span>
+        <span><h3>Telegram</h3><p>@USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://instagram.com/USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-instagram"></i></span>
+        <span><h3>Instagram</h3><p>@USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://youtube.com/@USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-youtube"></i></span>
+        <span><h3>YouTube</h3><p>@USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://facebook.com/USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-facebook"></i></span>
+        <span><h3>Facebook</h3><p>facebook.com/USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="mailto:yourname@gmail.com">
+        <span class="social-icon"><i class="fa-solid fa-envelope"></i></span>
+        <span><h3>Gmail</h3><p>yourname@gmail.com</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://github.com/USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-github"></i></span>
+        <span><h3>GitHub</h3><p>github.com/USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://www.tiktok.com/@USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-tiktok"></i></span>
+        <span><h3>TikTok</h3><p>@USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://www.linkedin.com/in/USERNAME/" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-linkedin"></i></span>
+        <span><h3>LinkedIn</h3><p>linkedin.com/in/USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+      <a class="social-card premium-reveal" href="https://x.com/USERNAME" target="_blank" rel="noopener">
+        <span class="social-icon"><i class="fa-brands fa-x-twitter"></i></span>
+        <span><h3>X / Twitter</h3><p>@USERNAME</p></span><i class="fa-solid fa-arrow-up-right-from-square social-arrow"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="premium-section" id="professional-contact">
+  <div class="container">
+    <div class="premium-contact">
+      <div class="premium-contact-box premium-reveal">
+        <div class="section-kicker">Let's connect</div>
+        <h2 class="premium-title">Bog‘lanish <span class="gradient">markazi</span></h2>
+        <p class="premium-muted">Portfolio orqali men bilan bog‘lanish uchun barcha asosiy kontaktlar bir joyda.</p>
+
+        <div class="availability"><i class="fa-solid fa-circle"></i> Hamkorlik uchun ochiq</div>
+
+        <div class="contact-info-grid">
+          <div class="contact-info"><b><i class="fa-solid fa-envelope"></i> Email</b><span>yourname@gmail.com</span></div>
+          <div class="contact-info"><b><i class="fa-brands fa-telegram"></i> Telegram</b><span>@USERNAME</span></div>
+          <div class="contact-info"><b><i class="fa-solid fa-location-dot"></i> Location</b><span>Uzbekistan</span></div>
+          <div class="contact-info"><b><i class="fa-solid fa-clock"></i> Response</b><span>24–48 soat ichida</span></div>
+        </div>
+
+        <div class="quick-actions">
+          <a href="mailto:yourname@gmail.com"><i class="fa-solid fa-envelope"></i> Email yozish</a>
+          <a href="https://t.me/USERNAME" target="_blank" rel="noopener"><i class="fa-brands fa-telegram"></i> Telegram</a>
+        </div>
+      </div>
+
+      <div class="premium-contact-box premium-reveal">
+        <div class="section-kicker">More</div>
+        <h2 class="premium-title">Yana <span class="gradient">foydali</span></h2>
+        <p class="premium-muted">Portfolio’ni yanada professional ko‘rsatadigan qo‘shimcha elementlar.</p>
+
+        <div class="premium-about-list">
+          <div class="premium-about-item"><i class="fa-solid fa-download"></i><div><b>CV / Resume</b><small>PDF CV uchun yuklab olish tugmasi</small></div></div>
+          <div class="premium-about-item"><i class="fa-solid fa-language"></i><div><b>UZ / RU / EN</b><small>Ko‘p tilli portfolio rejimi</small></div></div>
+          <div class="premium-about-item"><i class="fa-solid fa-share-nodes"></i><div><b>Share Portfolio</b><small>Portfolio’ni do‘stlar bilan ulashish</small></div></div>
+          <div class="premium-about-item"><i class="fa-solid fa-moon"></i><div><b>Dark / Light</b><small>Ko‘zga qulay theme almashtirish</small></div></div>
+        </div>
+
+        <p class="link-note">Eslatma: USERNAME va yourname@gmail.com joylarini o‘zingizning haqiqiy manzillaringiz bilan almashtiring.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script id="social-share-js">
+(function(){
+  const shareText='Mening portfolio saytim';
+  document.querySelectorAll('[data-share-portfolio]').forEach(btn=>{
+    btn.addEventListener('click',async()=>{
+      try{
+        if(navigator.share) await navigator.share({title:document.title,text:shareText,url:location.href});
+        else await navigator.clipboard.writeText(location.href);
+      }catch(e){}
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
