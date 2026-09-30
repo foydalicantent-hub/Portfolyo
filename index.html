@@ -1926,6 +1926,14 @@ body.cursor-hover .premium-cursor-ring{width:52px;height:52px;border-color:var(-
 @media(max-width:600px){.social-grid{grid-template-columns:1fr}.contact-info-grid{grid-template-columns:1fr}}
 </style>
 
+
+<style id="language-switcher-css">
+.lang-switcher{display:flex;align-items:center;gap:5px;margin-left:4px;padding:4px;border:1px solid var(--border);background:var(--card);border-radius:13px}
+.lang-switcher button{border:0;background:transparent;color:var(--muted);font-size:11px;font-weight:800;padding:8px 7px;border-radius:9px;cursor:pointer;transition:.25s}
+.lang-switcher button:hover,.lang-switcher button.active{color:var(--text);background:var(--card2);box-shadow:0 0 18px rgba(0,217,255,.08)}
+@media(max-width:950px){.lang-switcher{margin-left:0}.lang-switcher button{padding:7px 6px}}
+</style>
+
 </head>
 
 <body>
@@ -2003,6 +2011,12 @@ body.cursor-hover .premium-cursor-ring{width:52px;height:52px;border-color:var(-
         </ul>
 
     </nav>
+
+    <div class="lang-switcher" id="langSwitcher" aria-label="Language selector">
+        <button type="button" data-lang="uz" class="active">UZ</button>
+        <button type="button" data-lang="ru">RU</button>
+        <button type="button" data-lang="en">EN</button>
+    </div>
 
     <div class="nav-buttons">
 
@@ -4446,6 +4460,7 @@ if("speechSynthesis" in window){
         <h3>Portfolio</h3>
         <p>Dasturchi, dizayner va AI yo‘nalishidagi ishlarimni namoyish qiluvchi shaxsiy portfolio.</p>
         <div class="portfolio-tags"><span>Frontend</span><span>UI/UX</span><span>JavaScript</span></div>
+        <a class="btn btn-outline" href="https://foydalicantent-hub.github.io/Portfolyo" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Demo</a>
       </article>
     </div>
 
@@ -4834,6 +4849,63 @@ if("speechSynthesis" in window){
       }catch(e){}
     });
   });
+})();
+</script>
+
+
+<script id="multilingual-portfolio-js">
+(function(){
+  const translations={
+    uz:{
+      navHome:'Bosh sahifa',navAbout:'Men haqimda',navWorks:'Ishlarim',navSkills:'Ko‘nikmalar',navProjects:'Loyihalar',navCollab:'Hamkorlik',
+      heroSmall:'Men —',heroTitle:'Davlatov Lazizbek',heroRole:'Dasturchi & Dizayner',heroText:'Men Davlatov Lazizbek — dasturchi, dizayner va AI yo‘nalishlariga qiziqadigan kreativ developer. Web, AI, dizayn va raqamli texnologiyalar bilan ishlayman. Savollaringizga javob beraman, siz bilan suhbatlashaman va ovoz orqali ham ishlay olaman.',
+      workBtn:'Qilgan ishlarim',aiBtn:'AI bilan gaplashish',aboutEyebrow:'01 — MEN HAQIMDA',aboutTitle:'Men kimman va <span class="gradient">nima qilaman?</span>',aboutText:'Men — Davlatov Lazizbek. Dasturchi, dizayner va zamonaviy texnologiyalarga qiziqadigan yosh developer. Web dasturlash, AI, UI/UX, Telegram botlar va kiberxavfsizlik yo‘nalishlarida o‘rganaman va amaliy loyihalar yarataman.',
+      skillsTitle:'Mening <span class="gradient">ko‘nikmalarim</span>',projectsTitle:'Tanlangan <span class="gradient">loyihalar</span>',projectsText:'Portfolio’dagi eng muhim ishlarni yo‘nalish bo‘yicha ko‘rish mumkin.',all:'Barchasi',live:'Live Demo',demo:'Demo',
+      contactTitle:'Men bilan <span class="gradient">bog‘laning</span>',contactText:'Loyiha, hamkorlik yoki boshqa savollar uchun ijtimoiy tarmoqlar orqali bog‘lanishingiz mumkin.',collabTitle:'Birgalikda loyiha qilamiz',collabText:'Yangi g‘oya yoki web loyiha bo‘lsa, men bilan bog‘laning.',socialTitle:'Ijtimoiy tarmoqlar',socialText:'Yangiliklar va yangi loyihalarni kuzatib boring.',
+      email:'Email',telegram:'Telegram',instagram:'Instagram',youtube:'YouTube',github:'GitHub',location:'Joylashuv',direction:'Yo‘nalish',phone:'Telefon',
+      footer:'© 2026 Portfolio. Barcha huquqlar himoyalangan.'
+    },
+    ru:{
+      navHome:'Главная',navAbout:'Обо мне',navWorks:'Работы',navSkills:'Навыки',navProjects:'Проекты',navCollab:'Сотрудничество',
+      heroSmall:'Я —',heroTitle:'Давлатов Лазизбек',heroRole:'Разработчик & Дизайнер',heroText:'Я Давлатов Лазизбек — разработчик, дизайнер и молодой creative developer, интересующийся ИИ. Работаю с веб-разработкой, AI, дизайном и цифровыми технологиями. Отвечаю на вопросы, общаюсь и могу работать с голосом.',
+      workBtn:'Мои работы',aiBtn:'Поговорить с AI',aboutEyebrow:'01 — ОБО МНЕ',aboutTitle:'Кто я и <span class="gradient">что делаю?</span>',aboutText:'Я — Давлатов Лазизбек. Разработчик, дизайнер и молодой developer, интересующийся современными технологиями. Изучаю веб-разработку, AI, UI/UX, Telegram-ботов и кибербезопасность, создавая практические проекты.',
+      skillsTitle:'Мои <span class="gradient">навыки</span>',projectsTitle:'Избранные <span class="gradient">проекты</span>',projectsText:'Здесь можно посмотреть мои основные проекты по направлениям.',all:'Все',live:'Открыть демо',demo:'Открыть',
+      contactTitle:'Связаться <span class="gradient">со мной</span>',contactText:'Для проектов, сотрудничества и других вопросов можно связаться со мной через социальные сети.',collabTitle:'Создадим проект вместе',collabText:'Если у вас есть новая идея или веб-проект, свяжитесь со мной.',socialTitle:'Социальные сети',socialText:'Следите за новостями и новыми проектами.',
+      email:'Email',telegram:'Telegram',instagram:'Instagram',youtube:'YouTube',github:'GitHub',location:'Местоположение',direction:'Направление',phone:'Телефон',
+      footer:'© 2026 Portfolio. Все права защищены.'
+    },
+    en:{
+      navHome:'Home',navAbout:'About me',navWorks:'My work',navSkills:'Skills',navProjects:'Projects',navCollab:'Collaboration',
+      heroSmall:'I am',heroTitle:'Davlatov Lazizbek',heroRole:'Developer & Designer',heroText:'I am Davlatov Lazizbek — a developer, designer and young creative developer interested in AI. I work with web development, AI, design and digital technologies. I answer questions, chat with users and can also work with voice.',
+      workBtn:'My work',aiBtn:'Talk to AI',aboutEyebrow:'01 — ABOUT ME',aboutTitle:'Who am I and <span class="gradient">what do I do?</span>',aboutText:'I am Davlatov Lazizbek. A developer, designer and young developer interested in modern technologies. I study web development, AI, UI/UX, Telegram bots and cybersecurity while creating practical projects.',
+      skillsTitle:'My <span class="gradient">skills</span>',projectsTitle:'Featured <span class="gradient">projects</span>',projectsText:'Explore my main projects by category.',all:'All',live:'Live Demo',demo:'Open',
+      contactTitle:'Get in <span class="gradient">touch</span>',contactText:'For projects, collaboration or other questions, you can contact me through social networks.',collabTitle:'Let’s build a project together',collabText:'If you have a new idea or web project, feel free to contact me.',socialTitle:'Social networks',socialText:'Follow news and new projects.',
+      email:'Email',telegram:'Telegram',instagram:'Instagram',youtube:'YouTube',github:'GitHub',location:'Location',direction:'Direction',phone:'Phone',
+      footer:'© 2026 Portfolio. All rights reserved.'
+    }
+  };
+  const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
+  const set=(sel,key,html=false)=>{const el=q(sel); if(el && translations[current][key]!==undefined) html?el.innerHTML=translations[current][key]:el.textContent=translations[current][key];};
+  let current=localStorage.getItem('portfolioLang')||'uz';
+  function apply(lang){
+    current=translations[lang]?lang:'uz'; localStorage.setItem('portfolioLang',current); document.documentElement.lang=current;
+    qa('#langSwitcher button').forEach(b=>b.classList.toggle('active',b.dataset.lang===current));
+    set('.nav-links a[href="#home"]','navHome');set('.nav-links a[href="#about"]','navAbout');set('.nav-links a[href="#works"]','navWorks');set('.nav-links a[href="#skills"]','navSkills');set('.nav-links a[href="#projects"]','navProjects');set('.nav-links a[href="#collaboration"]','navCollab');
+    set('.hero h1 small','heroSmall');set('.hero h1','heroTitle');
+    const role=q('.hero h1'); if(role){const small=role.querySelector('small'); if(small) role.innerHTML=''; role.innerHTML='<small>'+translations[current].heroSmall+'</small>'+translations[current].heroTitle+'<span class="gradient" style="display:block;font-size:.52em;letter-spacing:-1px;margin-top:12px">'+translations[current].heroRole+'</span>';}
+    set('.hero-text','heroText');set('.buttons .btn[href="#works"]','workBtn');set('#openAI','aiBtn');
+    set('#about .eyebrow','aboutEyebrow');set('#about .section-title','aboutTitle',true);set('#about .description','aboutText');
+    set('#premium-projects .premium-title','projectsTitle',true);set('#premium-projects .premium-muted','projectsText');
+    const filter=q('#premiumFilter'); if(filter){const first=filter.querySelector('[data-filter="all"]');if(first) first.textContent=translations[current].all;qa('#premiumProjectGrid .premium-project-actions a').forEach(a=>{a.textContent=a.textContent.toLowerCase().includes('live')?translations[current].live:translations[current].demo;});}
+    set('#portfolio-contact h2','contactTitle',true);set('#portfolio-contact .section-head p','contactText');
+    set('#portfolio-contact .portfolio-contact-card h3','collabTitle');
+    const cCards=qa('#portfolio-contact .portfolio-contact-card'); if(cCards[0]){const p=cCards[0].querySelector('p');if(p)p.textContent=translations[current].collabText;} if(cCards[1]){const h=cCards[1].querySelector('h3');const p=cCards[1].querySelector('p');if(h)h.textContent=translations[current].socialTitle;if(p)p.textContent=translations[current].socialText;}
+    set('#social-hub .premium-title','socialTitle',true);set('#social-hub .premium-muted','socialText');
+    qa('.contact-info b').forEach(b=>{const txt=b.textContent.trim().toLowerCase();const icon=b.querySelector('i');if(!icon)return;const key=txt.includes('email')?'email':txt.includes('telegram')?'telegram':txt.includes('telefon')||txt.includes('phone')?'phone':txt.includes('location')||txt.includes('joylash')?'location':null;if(key)b.innerHTML=icon.outerHTML+' '+translations[current][key];});
+    const foot=qa('.premium-footer .container');foot.forEach(el=>el.textContent=translations[current].footer);
+  }
+  qa('#langSwitcher button').forEach(b=>b.addEventListener('click',()=>apply(b.dataset.lang)));
+  apply(current);
 })();
 </script>
 
